@@ -12,23 +12,23 @@
   <screenshots>
     <screenshot type="default">
       <caption>Providers tab</caption>
-      <image type="source" width="714" height="463">https://github.com/flathub/es.estoes.wallpaperDownloader/blob/master/screenshots/tab-providers.png</image>
+      <image type="source" width="714" height="463">https://github.com/flathub/es.estoes.wallpaperDownloader/raw/master/screenshots/tab-providers.png</image>
     </screenshot>
     <screenshot>
       <caption>Application Settings tab</caption>
-      <image type="source" width="714" height="463">https://github.com/flathub/es.estoes.wallpaperDownloader/blob/master/screenshots/tab-app-settings.png</image>
+      <image type="source" width="714" height="463">https://github.com/flathub/es.estoes.wallpaperDownloader/raw/master/screenshots/tab-app-settings.png</image>
     </screenshot>
     <screenshot>
       <caption>Changer tab</caption>
-      <image type="source" width="714" height="463">https://github.com/flathub/es.estoes.wallpaperDownloader/blob/master/screenshots/tab-changer.png</image>
+      <image type="source" width="714" height="463">https://github.com/flathub/es.estoes.wallpaperDownloader/raw/master/screenshots/tab-changer.png</image>
     </screenshot>
     <screenshot>
       <caption>Downloads Directory tab</caption>
-      <image type="source" width="714" height="463">https://github.com/flathub/es.estoes.wallpaperDownloader/blob/master/screenshots/tab-downloads-dir.png</image>
+      <image type="source" width="714" height="463">https://github.com/flathub/es.estoes.wallpaperDownloader/raw/master/screenshots/tab-downloads-dir.png</image>
     </screenshot>
     <screenshot>
       <caption>Wallpapers tab</caption>
-      <image type="source" width="714" height="463">https://github.com/flathub/es.estoes.wallpaperDownloader/blob/master/screenshots/tab-wallpapers.png</image>
+      <image type="source" width="714" height="463">https://github.com/flathub/es.estoes.wallpaperDownloader/raw/master/screenshots/tab-wallpapers.png</image>
     </screenshot>
   </screenshots>
   <url type="homepage">https://bitbucket.org/eloy_garcia_pca/wallpaperdownloader</url>
