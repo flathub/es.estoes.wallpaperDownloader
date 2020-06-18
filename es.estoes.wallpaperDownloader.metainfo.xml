@@ -11,12 +11,24 @@
   <description><p>Wallpaper Downloader can automatically download and set wallpapers for you. Supported sites include: DeviantArt, Wallhaven, Bing Daily Wallpaper, Social Wallpapering, WallpaperFusion, DualMonitorBackgrounds.</p></description>
   <screenshots>
     <screenshot type="default">
-      <caption>Main window</caption>
-      <image type="source" width="714" height="464">https://i.imgur.com/f8cISmZ.png</image>
+      <caption>Providers tab</caption>
+      <image type="source" width="714" height="463">https://github.com/flathub/es.estoes.wallpaperDownloader/blob/master/screenshots/tab-providers.png</image>
     </screenshot>
     <screenshot>
-      <caption>Downloaded wallpapers</caption>
-      <image type="source" width="714" height="464">https://i.imgur.com/KjLugQI.png</image>
+      <caption>Application Settings tab</caption>
+      <image type="source" width="714" height="463">https://github.com/flathub/es.estoes.wallpaperDownloader/blob/master/screenshots/tab-app-settings.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Changer tab</caption>
+      <image type="source" width="714" height="463">https://github.com/flathub/es.estoes.wallpaperDownloader/blob/master/screenshots/tab-changer.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Downloads Directory tab</caption>
+      <image type="source" width="714" height="463">https://github.com/flathub/es.estoes.wallpaperDownloader/blob/master/screenshots/tab-downloads-dir.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Wallpapers tab</caption>
+      <image type="source" width="714" height="463">https://github.com/flathub/es.estoes.wallpaperDownloader/blob/master/screenshots/tab-wallpapers.png</image>
     </screenshot>
   </screenshots>
   <url type="homepage">https://bitbucket.org/eloy_garcia_pca/wallpaperdownloader</url>
