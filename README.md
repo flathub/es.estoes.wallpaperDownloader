@@ -32,10 +32,10 @@ Now, install `flatpak` and `flatpak-builder`:
 sudo apt install flatpak flatpak-builder
 ```
 
-Next, add the official FreeDesktop SDK remote to Flatpak. It will be installed for the current user only:
+Next, add the official Flathub remote to Flatpak. It will be installed for the current user only:
 
 ```bash
-flatpak --user remote-add --if-not-exists freedesktop-sdk https://cache.sdk.freedesktop.org/freedesktop-sdk.flatpakrepo
+flatpak --user remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 ```
 
 **Beware:** If you're running this next command for the first time, Flatpak will download about 1.2 GiB of files!
@@ -43,7 +43,7 @@ flatpak --user remote-add --if-not-exists freedesktop-sdk https://cache.sdk.free
 Now, we'll use `flatpak-builder` to build Wallpaper Downloader:
 
 ```bash
-flatpak-builder --user --force-clean --install-deps-from=freedesktop-sdk --repo=repo/ --sandbox build es.estoes.wallpaperDownloader.yml
+flatpak-builder --user --force-clean --install-deps-from=flathub --repo=repo/ --sandbox build es.estoes.wallpaperDownloader.yaml
 ```
 
 Running the command above, will:
@@ -54,23 +54,17 @@ Running the command above, will:
 * Create a clean Flatpak build of Wallpaper Downloader.
 * ... And finally, if the build succeeds, it will be exported to a [local Flatpak repository](https://docs.flatpak.org/en/latest/flatpak-builder.html#exporting-to-a-repository), which can later be used to install it or package it as a [single-file bundle](https://docs.flatpak.org/en/latest/single-file-bundles.html), used mostly for software distribution.
 
-For more technical details, you can simply read the `es.estoes.wallpaperDownloader.yml` file in this repository. And for more details on Flatpak manifests in general, [check out this page](https://docs.flatpak.org/en/latest/manifests.html).
+For more technical details, you can simply read the `es.estoes.wallpaperDownloader.yaml` file in this repository. And for more details on Flatpak manifests in general, [check out this page](https://docs.flatpak.org/en/latest/manifests.html).
 
 The building process should not give you any errors. If you get any, please [open a new issue](https://github.com/flathub/es.estoes.wallpaperDownloader/issues).
 
 Anyway, now that the Flatpak build is finished, you can try to run Wallpaper Downloader without having to actually install it. However, this method is recommended for testing only:
 
 ```bash
-flatpak-builder --run build-dir/ es.estoes.wallpaperDownloader.yml es.estoes.wallpaperDownloader.sh
+flatpak-builder --run build-dir/ es.estoes.wallpaperDownloader.yaml es.estoes.wallpaperDownloader.sh
 ```
 
 ### Cleaning up
-
-To remove the FreeDesktop SDK repository:
-
-```bash
-flatpak --user remote-delete freedesktop-sdk
-```
 
 To uninstall unused Flatpak runtimes/SDKs (**Note:** Inspect the packages before removing them):
 
@@ -98,16 +92,16 @@ To install it:
 flatpak --user install --reinstall WallpaperDownloader.flatpak
 ```
 
-#### Generating or updating maven-dependencies.yml
+#### Generating or updating maven-dependencies.yaml
 
-I'm currently using a very hacky and ugly method to generate the `maven-dependencies.yml` file, which is required if:
+I'm currently using a very hacky and ugly method to generate the `maven-dependencies.yaml` file, which is required if:
 
 * You're using the `--sandbox` option in `flatpak-builder` (which Flathub does, by default).
 * You want to build a Java program entirely from source, as opposed to packaging a pre-compiled `.jar` file.
 
 To generate this file, however, we will have to modify the manifest file in this repository first.
 
-So, open `es.estoes.wallpaperDownloader.yml` and add the following key under `build-options:`:
+So, open `es.estoes.wallpaperDownloader.yaml` and add the following key under `build-options:`:
 
 ```yaml
 build-args:
@@ -117,7 +111,7 @@ build-args:
 Additionally, **delete** the following line, which can be found under the `sources:` key:
 
 ```yaml
-- maven-dependencies.yml
+- maven-dependencies.yaml
 ```
 
 Then, delete the existing build directory (if any):
@@ -129,25 +123,29 @@ rm -rf .flatpak-builder/
 Now, build it:
 
 ```bash
-flatpak-builder --user --build-only --force-clean --keep-build-dirs build es.estoes.wallpaperDownloader.yml
+flatpak-builder --user --build-only --force-clean --keep-build-dirs build es.estoes.wallpaperDownloader.yaml
 ```
 
 The build should succeed.
 
-Now, to finally generate the `maven-dependencies.yml` file, we will use an awesome program called [fd](https://github.com/sharkdp/fd), which is basically a faster alternative to this other awesome program, called `find`.
+Now, to finally generate the `maven-dependencies.yaml` file, we will have to install [natsort](https://pypi.org/project/natsort/). Most distros have this program in their official repositories as `python-natsort`.
 
-Once `fd` is installed, run this command:
+Once `natsort` is installed, run this command:
 
 ```bash
-(cd .flatpak-builder/build/wallpaperdownloader-1/.m2/repository/ && fd -j 1 -t f '\.(jar|pom)$' -x bash -c 'echo -e "- type: file\n  dest: .m2/repository/{//}\n  url: https://repo.maven.apache.org/maven2/{}\n  sha1: $(sha1sum {} | cut -c 1-40)"') > maven-dependencies.yml
+(cd .flatpak-builder/build/wallpaperdownloader-1/.m2/repository/ &&
+    find * -type f \( -iname '*.jar' -o -iname '*.pom' \) |
+    natsort -p |
+    xargs -rI '{}' bash -c 'echo -e "- type: file\n  dest: .m2/repository/$(dirname {})\n  url: https://repo.maven.apache.org/maven2/{}\n  sha1: $(sha1sum {} | cut -c 1-40)"') \
+    > maven-dependencies.yaml
 ```
 
-To test if this generated file actually works, just **revert** the changes you did to `es.estoes.wallpaperDownloader.yml` in the previous steps.
+To test if this generated file actually works, just **revert** the changes you did to `es.estoes.wallpaperDownloader.yaml` in the previous steps.
 
 Then, try building Wallpaper Downloader with the `--sandbox` option:
 
 ```bash
-flatpak-builder --user --force-clean --sandbox build es.estoes.wallpaperDownloader.yml
+flatpak-builder --user --force-clean --sandbox build es.estoes.wallpaperDownloader.yaml
 ```
 
 ### Bugs
