@@ -1,6 +1,6 @@
 # Wallpaper Downloader
 
-This repository contains all the files necessary to create a Flatpak build of Wallpaper Downloader, a cross-platform Java program that manages and downloads wallpapers from various sites, including: [DeviantArt](https://www.deviantart.com/), [Wallhaven](https://wallhaven.cc/), [Bing Daily Wallpaper](https://bing.wallpaper.pics/), [Social Wallpapering](https://www.socwall.com/), [WallpaperFusion](https://www.wallpaperfusion.com/), [Dual Monitor Backgrounds](https://www.dualmonitorbackgrounds.com/). 
+This repository contains all the files necessary to create a Flatpak build of Wallpaper Downloader, a cross-platform Java program that manages and downloads wallpapers from various sites, including: [DeviantArt](https://www.deviantart.com/), [Wallhaven](https://wallhaven.cc/), [Bing Daily Wallpaper](https://bing.wallpaper.pics/), [Social Wallpapering](https://www.socwall.com/), [WallpaperFusion](https://www.wallpaperfusion.com/), [Dual Monitor Backgrounds](https://www.dualmonitorbackgrounds.com/).
 
 The main repository is [here](https://bitbucket.org/eloy_garcia_pca/wallpaperdownloader).
 
