@@ -38,8 +38,8 @@ modules:
       - desktop-file-edit --set-icon=es.estoes.wallpaperDownloader "${FLATPAK_DEST}/share/applications/es.estoes.wallpaperDownloader.desktop"
     sources:
       - type: archive
-        url: https://bitbucket.org/eloy_garcia_pca/wallpaperdownloader/get/v4.0.tar.gz
-        sha256: d9ab3b751bf2a4659567ebcb8c573d7ad38ad85e6c1f1216b7db34341d4f2156
+        url: https://bitbucket.org/eloy_garcia_pca/wallpaperdownloader/get/v4.1.tar.gz
+        sha256: 9844a31e96d18900622ea53b16ba445932056462b77e81ffaa7dad24e251d47f
       - type: file
         path: es.estoes.wallpaperDownloader.sh
       - type: file
