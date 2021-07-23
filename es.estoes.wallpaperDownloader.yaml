@@ -45,3 +45,5 @@ modules:
         buildsystem: simple
         build-commands:
           - /usr/lib/sdk/openjdk11/install.sh
+          # Workaround for: https://github.com/flathub/org.freedesktop.Sdk.Extension.openjdk11/issues/18
+          - ln -sf /usr/lib/$FLATPAK_ARCH-linux-gnu/libharfbuzz.so.0 /app/jre/lib/libharfbuzz.so
