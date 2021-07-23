@@ -22,10 +22,7 @@ modules:
         MAVEN_OPTS: -Dmaven.repo.local=.m2/repository
         JAVA_HOME: /usr/lib/sdk/openjdk11/jvm/openjdk-11
     build-commands:
-      # Temporary workaround to skip the bundling of Wallpaper Downloader into a .tar.gz archive
-      # Ideally, this should be fixed by creating a separate build profile in "pom.xml"
-      - sed -i "113s/package/none/" "pom.xml"
-      - mvn clean package
+      - mvn clean package -DpackagingPhase=none
       - install -Dm755 -t "${FLATPAK_DEST}/bin" "es.estoes.wallpaperDownloader.sh"
       - install -Dm644 -t "${FLATPAK_DEST}/share/es.estoes.wallpaperDownloader" "target/wallpaperdownloader.jar"
       - install -Dm644 "deb/wallpaperdownloader.desktop" "${FLATPAK_DEST}/share/applications/es.estoes.wallpaperDownloader.desktop"
