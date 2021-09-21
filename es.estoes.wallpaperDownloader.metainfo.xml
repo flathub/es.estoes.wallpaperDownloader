@@ -8,7 +8,7 @@
   <summary>Download, manage and change your wallpapers automatically from the Internet</summary>
   <summary xml:lang="es">Gestiona y descarga automáticamente fondos de pantalla desde Internet</summary>
   <summary xml:lang="pt_BR">Gerencia e baixa automaticamente papéis de parede da Internet</summary>
-  <description><p>Wallpaper Downloader can automatically download and set wallpapers for you. Supported sites include: DeviantArt, Wallhaven, Bing Daily Wallpaper, Social Wallpapering, WallpaperFusion, DualMonitorBackgrounds.</p></description>
+  <description><p>Wallpaper Downloader can automatically download and set wallpapers for you. Supported sites include: DeviantArt, Wallhaven, Bing Daily Wallpaper, Social Wallpapering, WallpaperFusion, DualMonitorBackgrounds, Unsplash.</p></description>
   <screenshots>
     <screenshot type="default">
       <caption>Providers tab</caption>
