@@ -36,6 +36,7 @@
   <url type="bugtracker">https://bitbucket.org/eloy_garcia_pca/wallpaperdownloader/issues?status=new&amp;status=open</url>
   <content_rating type="oars-1.1"/>
   <releases>
+    <release date="2022-07-07" version="4.3"/>
     <release date="2021-07-23" version="4.2"/>
     <release date="2021-01-07" version="4.1"/>
     <release date="2020-06-17" version="4.0"/>
