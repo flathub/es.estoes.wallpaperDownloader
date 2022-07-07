@@ -4,7 +4,7 @@ runtime-version: '21.08'
 sdk: org.freedesktop.Sdk
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.openjdk11
-command: es.estoes.wallpaperDownloader.sh
+command: wallpaperdownloader
 finish-args:
   - --share=network
   - --socket=x11
@@ -23,20 +23,20 @@ modules:
         JAVA_HOME: /usr/lib/sdk/openjdk11/jvm/openjdk-11
     build-commands:
       - mvn clean package -DpackagingPhase=none
-      - install -Dm755 -t "${FLATPAK_DEST}/bin" "es.estoes.wallpaperDownloader.sh"
-      - install -Dm644 -t "${FLATPAK_DEST}/share/es.estoes.wallpaperDownloader" "target/wallpaperdownloader.jar"
-      - install -Dm644 "deb/wallpaperdownloader.desktop" "${FLATPAK_DEST}/share/applications/es.estoes.wallpaperDownloader.desktop"
-      - install -Dm644 "deb/wallpaperdownloader.svg" "${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/es.estoes.wallpaperDownloader.svg"
-      - install -Dm644 -t "${FLATPAK_DEST}/share/metainfo" "es.estoes.wallpaperDownloader.metainfo.xml"
-      - desktop-file-edit --remove-key=Version "${FLATPAK_DEST}/share/applications/es.estoes.wallpaperDownloader.desktop"
-      - desktop-file-edit --set-key=Exec --set-value="${FLATPAK_DEST}/bin/es.estoes.wallpaperDownloader.sh" "${FLATPAK_DEST}/share/applications/es.estoes.wallpaperDownloader.desktop"
-      - desktop-file-edit --set-icon=es.estoes.wallpaperDownloader "${FLATPAK_DEST}/share/applications/es.estoes.wallpaperDownloader.desktop"
+      - install -Dm755 -t /app/bin wallpaperdownloader
+      - install -Dm644 -t /app/share/es.estoes.wallpaperDownloader target/wallpaperdownloader.jar
+      - install -Dm644 deb/wallpaperdownloader.desktop /app/share/applications/es.estoes.wallpaperDownloader.desktop
+      - install -Dm644 deb/wallpaperdownloader.svg /app/share/icons/hicolor/scalable/apps/es.estoes.wallpaperDownloader.svg
+      - install -Dm644 -t /app/share/metainfo es.estoes.wallpaperDownloader.metainfo.xml
+      - desktop-file-edit --set-icon=es.estoes.wallpaperDownloader --set-key=Exec --set-value=wallpaperdownloader /app/share/applications/es.estoes.wallpaperDownloader.desktop
     sources:
       - type: archive
         url: https://bitbucket.org/eloy_garcia_pca/wallpaperdownloader/get/v4.2.tar.gz
         sha256: 76e8d523f6127032d08f33167e9182ae52d5900d98c314a85c7f7aba73592a12
-      - type: file
-        path: es.estoes.wallpaperDownloader.sh
+      - type: script
+        dest-filename: wallpaperdownloader
+        commands:
+          - exec java -Xmx256m -Xms128m -jar /app/share/es.estoes.wallpaperDownloader/wallpaperdownloader.jar $@
       - type: file
         path: es.estoes.wallpaperDownloader.metainfo.xml
       - maven-dependencies.yaml
