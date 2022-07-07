@@ -31,8 +31,8 @@ modules:
       - desktop-file-edit --set-icon=es.estoes.wallpaperDownloader --set-key=Exec --set-value=wallpaperdownloader /app/share/applications/es.estoes.wallpaperDownloader.desktop
     sources:
       - type: archive
-        url: https://bitbucket.org/eloy_garcia_pca/wallpaperdownloader/get/v4.2.tar.gz
-        sha256: 76e8d523f6127032d08f33167e9182ae52d5900d98c314a85c7f7aba73592a12
+        url: https://bitbucket.org/eloy_garcia_pca/wallpaperdownloader/get/v4.3.tar.gz
+        sha256: 4537134f03eeb53ed5fbc2666dbf1f821cc445a905d5cf3626740b466f1c646e
       - type: script
         dest-filename: wallpaperdownloader
         commands:
