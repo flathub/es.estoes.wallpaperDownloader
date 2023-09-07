@@ -1,10 +1,11 @@
 app-id: es.estoes.wallpaperDownloader
 runtime: org.freedesktop.Platform
-runtime-version: '22.08'
+runtime-version: '23.08'
 sdk: org.freedesktop.Sdk
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.openjdk11
 command: wallpaperdownloader
+
 finish-args:
   - --share=network
   - --socket=x11
