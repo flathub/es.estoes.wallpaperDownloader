@@ -24,11 +24,12 @@ modules:
     build-commands:
       - mvn clean package -DpackagingPhase=none
       - install -Dm755 -t /app/bin wallpaperdownloader
-      - install -Dm644 -t /app/share/es.estoes.wallpaperDownloader target/wallpaperdownloader.jar
-      - install -Dm644 deb/wallpaperdownloader.desktop /app/share/applications/es.estoes.wallpaperDownloader.desktop
-      - install -Dm644 deb/wallpaperdownloader.svg /app/share/icons/hicolor/scalable/apps/es.estoes.wallpaperDownloader.svg
-      - install -Dm644 -t /app/share/metainfo es.estoes.wallpaperDownloader.metainfo.xml
-      - desktop-file-edit --set-icon=es.estoes.wallpaperDownloader --set-key=Exec --set-value=wallpaperdownloader /app/share/applications/es.estoes.wallpaperDownloader.desktop
+      - install -Dm644 -t /app/share/$FLATPAK_ID target/wallpaperdownloader.jar
+      - install -Dm644 deb/wallpaperdownloader.desktop /app/share/applications/$FLATPAK_ID.desktop
+      - install -Dm644 deb/wallpaperdownloader.svg /app/share/icons/hicolor/scalable/apps/$FLATPAK_ID.svg
+      - install -Dm644 -t /app/share/metainfo $FLATPAK_ID.metainfo.xml
+      - desktop-file-edit --set-icon=$FLATPAK_ID /app/share/applications/$FLATPAK_ID.desktop
+      - desktop-file-edit --set-key=Exec --set-value=wallpaperdownloader /app/share/applications/$FLATPAK_ID.desktop
     sources:
       - type: archive
         url: https://bitbucket.org/eloy_garcia_pca/wallpaperdownloader/get/v4.3.tar.gz
