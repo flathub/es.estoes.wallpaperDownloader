@@ -2,13 +2,16 @@
 <component type="desktop-application">
   <id>es.estoes.wallpaperDownloader</id>
   <name>Wallpaper Downloader</name>
+  <launchable type="desktop-id">es.estoes.wallpaperDownloader.desktop</launchable>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0-only</project_license>
   <developer_name>Eloy García Almadén</developer_name>
   <summary>Download, manage and change your wallpapers automatically from the Internet</summary>
   <summary xml:lang="es">Gestiona y descarga automáticamente fondos de pantalla desde Internet</summary>
   <summary xml:lang="pt_BR">Gerencia e baixa automaticamente papéis de parede da Internet</summary>
-  <description><p>Wallpaper Downloader can automatically download and set wallpapers for you. Supported sites include: DeviantArt, Wallhaven, Bing Daily Wallpaper, Social Wallpapering, WallpaperFusion, DualMonitorBackgrounds, Unsplash.</p></description>
+  <description>
+    <p>Wallpaper Downloader can automatically download and set wallpapers for you. Supported sites include: DeviantArt, Wallhaven, Bing Daily Wallpaper, Social Wallpapering, WallpaperFusion, DualMonitorBackgrounds, Unsplash.</p>
+  </description>
   <screenshots>
     <screenshot type="default">
       <caption>Providers tab</caption>
