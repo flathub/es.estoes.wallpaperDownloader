@@ -13,7 +13,13 @@ finish-args:
   - --env=JAVA_HOME=/app/jre
   - --filesystem=~/.wallpaperdownloader:create
   - --talk-name=org.freedesktop.Flatpak
+
 modules:
+  - name: openjdk
+    buildsystem: simple
+    build-commands:
+      - /usr/lib/sdk/openjdk11/install.sh
+
   - name: wallpaperdownloader
     buildsystem: simple
     build-options:
@@ -41,8 +47,3 @@ modules:
       - type: file
         path: es.estoes.wallpaperDownloader.metainfo.xml
       - maven-dependencies.yaml
-    modules:
-      - name: openjdk
-        buildsystem: simple
-        build-commands:
-          - /usr/lib/sdk/openjdk11/install.sh
