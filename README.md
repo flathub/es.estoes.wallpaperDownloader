@@ -1,153 +1,41 @@
-# Wallpaper Downloader
+### Generating maven-dependencies.yaml
 
-This repository contains all the files necessary to create a Flatpak build of Wallpaper Downloader, a cross-platform Java program that manages and downloads wallpapers from various sites, including: [DeviantArt](https://www.deviantart.com/), [Wallhaven](https://wallhaven.cc/), [Bing Daily Wallpaper](https://bing.wallpaper.pics/), [Social Wallpapering](https://www.socwall.com/), [WallpaperFusion](https://www.wallpaperfusion.com/), [Dual Monitor Backgrounds](https://www.dualmonitorbackgrounds.com/).
+Here's a *very* hacky way to generate the `maven-dependencies.yaml` file until [maven support](https://github.com/flatpak/flatpak-builder-tools/pull/253) is added to `flatpak-builder-tools`:
 
-The main repository is [here](https://bitbucket.org/eloy_garcia_pca/wallpaperdownloader).
-
-## Installation
-
-It's recommended to install Wallpaper Downloader via [Flathub](https://flathub.org/apps/details/es.estoes.wallpaperDownloader). But you can keep reading if you want to build it yourself.
-
-## Build instructions
-
-**Beware:** These instructions were only tested on Ubuntu 18.04 LTS.
-
-First, clone this repository:
-
-```bash
-git clone https://github.com/flathub/es.estoes.wallpaperDownloader.git
-cd es.estoes.wallpaperDownloader/
-```
-
-Then, add the [official Flatpak PPA](https://flatpak.org/setup/Ubuntu/), in order to get the most recent version of Flatpak and its tools:
-
-```bash
-sudo add-apt-repository ppa:alexlarsson/flatpak
-sudo apt update
-```
-
-Now, install `flatpak` and `flatpak-builder`:
-
-```bash
-sudo apt install flatpak flatpak-builder
-```
-
-Next, add the official Flathub remote to Flatpak. It will be installed for the current user only:
-
-```bash
-flatpak --user remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-```
-
-**Beware:** If you're running this next command for the first time, Flatpak will download about 1.2 GiB of files!
-
-Now, we'll use `flatpak-builder` to build Wallpaper Downloader:
-
-```bash
-flatpak-builder --user --force-clean --install-deps-from=flathub --repo=repo/ --sandbox build es.estoes.wallpaperDownloader.yaml
-```
-
-Running the command above, will:
-
-* Automatically download and install the required software to build and run Wallpaper Downloader.
-* Download the source code of Wallpaper Downloader from the [official repository](https://bitbucket.org/eloy_garcia_pca/wallpaperdownloader).
-* Download Maven's build dependencies.
-* Create a clean Flatpak build of Wallpaper Downloader.
-* ... And finally, if the build succeeds, it will be exported to a [local Flatpak repository](https://docs.flatpak.org/en/latest/flatpak-builder.html#exporting-to-a-repository), which can later be used to install it or package it as a [single-file bundle](https://docs.flatpak.org/en/latest/single-file-bundles.html), used mostly for software distribution.
-
-For more technical details, you can simply read the `es.estoes.wallpaperDownloader.yaml` file in this repository. And for more details on Flatpak manifests in general, [check out this page](https://docs.flatpak.org/en/latest/manifests.html).
-
-The building process should not give you any errors. If you get any, please [open a new issue](https://github.com/flathub/es.estoes.wallpaperDownloader/issues).
-
-Anyway, now that the Flatpak build is finished, you can try to run Wallpaper Downloader without having to actually install it. However, this method is recommended for testing only:
-
-```bash
-flatpak-builder --run build-dir/ es.estoes.wallpaperDownloader.yaml es.estoes.wallpaperDownloader.sh
-```
-
-### Cleaning up
-
-To uninstall unused Flatpak runtimes/SDKs (**Note:** Inspect the packages before removing them):
-
-```bash
-flatpak --user uninstall --unused
-```
-
-After that, just delete this repository's folder.
-
-### Miscellaneous
-
-#### Creating a single-file bundle
-
-Finish the build process, as mentioned above. Then, create a single-bundle file named `WallpaperDownloader.flatpak` using this command:
-
-```bash
-flatpak build-bundle repo/ WallpaperDownloader.flatpak es.estoes.wallpaperDownloader master
-```
-
-You can now install or distribute this single-file bundle, but keep in mind that auto-updates won't work, obviously.
-
-To install it:
-
-```bash
-flatpak --user install --reinstall WallpaperDownloader.flatpak
-```
-
-#### Generating or updating maven-dependencies.yaml
-
-I'm currently using a very hacky and ugly method to generate the `maven-dependencies.yaml` file, which is required if:
-
-* You're using the `--sandbox` option in `flatpak-builder` (which Flathub does, by default).
-* You want to build a Java program entirely from source, as opposed to packaging a pre-compiled `.jar` file.
-
-To generate this file, however, we will have to modify the manifest file in this repository first.
-
-So, open `es.estoes.wallpaperDownloader.yaml` and add the following key under `build-options:`:
+Temporarily enable network access at build time by adding the following key under `build-options:` in the manifest file (`es.estoes.wallpaperDownloader.yaml`):
 
 ```yaml
-build-args:
-  - --share=network
+      build-args:
+        - --share=network
 ```
 
-Additionally, **delete** the following line, which can be found under the `sources:` key:
+Now, *delete* the following line from the manifest file, found under the `sources:` key:
 
 ```yaml
-- maven-dependencies.yaml
+      - maven-dependencies.yaml
 ```
 
-Then, delete the existing build directory (if any):
+Now, invoke `flatpak-builder`:
 
 ```bash
-rm -rf .flatpak-builder/
+flatpak-builder --build-only --force-clean --keep-build-dirs --install-deps-from=flathub builddir/ es.estoes.wallpaperDownloader.yaml
 ```
 
-Now, build it:
+After the build succeeds, make sure you have the [`fd` tool](https://github.com/sharkdp/fd) installed.
+
+Then, run these two commands to finally generate the `maven-dependencies.yaml` file:
 
 ```bash
-flatpak-builder --user --build-only --force-clean --keep-build-dirs build es.estoes.wallpaperDownloader.yaml
+cd .flatpak-builder/build/wallpaperdownloader/.m2/repository
+fd '\.(jar|pom)$' | sort -V | xargs -rI '{}' bash -c 'echo -e "- type: file\n  dest: .m2/repository/$(dirname {})\n  url: https://repo.maven.apache.org/maven2/{}\n  sha256: $(sha256sum {} | cut -c 1-64)"' > ../../../../../maven-dependencies.yaml
 ```
 
-The build should succeed.
+To test if this generated file actually works, first *revert* the changes you did to the manifest file in the previous steps.
 
-Now, to finally generate the `maven-dependencies.yaml` file, we will have to install [natsort](https://pypi.org/project/natsort/). Most distros have this program in their official repositories as `python-natsort`.
-
-Once `natsort` is installed, run this command:
+Then, invoke `flatpak-builder` with the `--sandbox` option:
 
 ```bash
-(cd .flatpak-builder/build/wallpaperdownloader-1/.m2/repository/ &&
-    find * -type f \( -iname '*.jar' -o -iname '*.pom' \) |
-    natsort -p |
-    xargs -rI '{}' bash -c 'echo -e "- type: file\n  dest: .m2/repository/$(dirname {})\n  url: https://repo.maven.apache.org/maven2/{}\n  sha1: $(sha1sum {} | cut -c 1-40)"') \
-    > maven-dependencies.yaml
+flatpak-builder --force-clean --sandbox builddir/ es.estoes.wallpaperDownloader.yaml
 ```
 
-To test if this generated file actually works, just **revert** the changes you did to `es.estoes.wallpaperDownloader.yaml` in the previous steps.
-
-Then, try building Wallpaper Downloader with the `--sandbox` option:
-
-```bash
-flatpak-builder --user --force-clean --sandbox build es.estoes.wallpaperDownloader.yaml
-```
-
-### Bugs
-
-Any bugs in Wallpaper Downloader itself (that is, **not related** to the build process), should be reported to the [main repository](https://bitbucket.org/eloy_garcia_pca/wallpaperdownloader) instead.
+The build should succeed if the file was generated correctly.
