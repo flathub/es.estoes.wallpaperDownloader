@@ -26,7 +26,7 @@ After the build succeeds, make sure you have the [`fd` tool](https://github.com/
 Then, run these two commands to finally generate the `maven-dependencies.yaml` file:
 
 ```bash
-cd .flatpak-builder/build/wallpaperdownloader/.m2/repository
+cd .flatpak-builder/builddir/wallpaperdownloader/.m2/repository
 fd '\.(jar|pom)$' | sort -V | xargs -rI '{}' bash -c 'echo -e "- type: file\n  dest: .m2/repository/$(dirname {})\n  url: https://repo.maven.apache.org/maven2/{}\n  sha256: $(sha256sum {} | cut -c 1-64)"' > ../../../../../maven-dependencies.yaml
 ```
 
