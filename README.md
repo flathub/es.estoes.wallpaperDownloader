@@ -1,6 +1,6 @@
 ### Generating maven-dependencies.yaml
 
-Here's a *very* hacky way to generate the `maven-dependencies.yaml` file until [maven support](https://github.com/flatpak/flatpak-builder-tools/pull/253) is added to `flatpak-builder-tools`:
+Here's a *very* messy and ineffective way to generate the `maven-dependencies.yaml` file, at least until [proper maven support](https://github.com/flatpak/flatpak-builder-tools/pull/253) is added:
 
 Temporarily enable network access at build time by adding the following key under `build-options:` in the manifest file (`es.estoes.wallpaperDownloader.yaml`):
 
@@ -21,13 +21,11 @@ Now, invoke `flatpak-builder`:
 flatpak-builder --build-only --force-clean --keep-build-dirs --install-deps-from=flathub builddir/ es.estoes.wallpaperDownloader.yaml
 ```
 
-After the build succeeds, make sure you have the [`fd` tool](https://github.com/sharkdp/fd) installed.
-
-Then, run these two commands to finally generate the `maven-dependencies.yaml` file:
+Then, run these commands to finally generate the `maven-dependencies.yaml` file:
 
 ```bash
-cd .flatpak-builder/builddir/wallpaperdownloader/.m2/repository
-fd '\.(jar|pom)$' | sort -V | xargs -rI '{}' bash -c 'echo -e "- type: file\n  dest: .m2/repository/$(dirname {})\n  url: https://repo.maven.apache.org/maven2/{}\n  sha256: $(sha256sum {} | cut -c 1-64)"' > ../../../../../maven-dependencies.yaml
+MAVEN_REPO="$PWD/.flatpak-builder/build/wallpaperdownloader/.m2/repository"
+find $MAVEN_REPO \( -iname '*.jar' -o -iname '*.pom' \) -printf '%P\n' | sort -V | xargs -rI '{}' bash -c "echo -e \"- type: file\n  dest: .m2/repository/\$(dirname {})\n  url: https://repo.maven.apache.org/maven2/{}\n  sha256: \$(sha256sum \"$MAVEN_REPO/{}\" | cut -c 1-64)\"" > maven-dependencies.yaml
 ```
 
 To test if this generated file actually works, first *revert* the changes you did to the manifest file in the previous steps.
@@ -38,4 +36,4 @@ Then, invoke `flatpak-builder` with the `--sandbox` option:
 flatpak-builder --force-clean --sandbox builddir/ es.estoes.wallpaperDownloader.yaml
 ```
 
-The build should succeed if the file was generated correctly.
+If the file was generated correctly, the build will succeed.
