@@ -43,14 +43,12 @@ modules:
     sources:
       - type: archive
         dest-filename: wallpaperdownloader.tar.gz
-        url: https://bitbucket.org/eloy_garcia_pca/wallpaperdownloader/get/v4.3.tar.gz
-        sha256: 4537134f03eeb53ed5fbc2666dbf1f821cc445a905d5cf3626740b466f1c646e
+        url: https://bitbucket.org/eloy_garcia_pca/wallpaperdownloader/get/v4.4.0.tar.gz
+        sha256: b4fde93fbe7138fb053092f6e4e4d11eefc102085708f27443cd0936bea57d8e
         x-checker-data:
-          is-main-source: true
           type: json
           url: https://api.bitbucket.org/2.0/repositories/eloy_garcia_pca/wallpaperdownloader/refs/tags?sort=-name
           tag-query: .values | .[0].name
-          timestamp-query: .values | .[0].date
           version-query: $tag | sub("^v"; "")
           url-query: '"https://bitbucket.org/eloy_garcia_pca/wallpaperdownloader/get/\($tag).tar.gz"'
       - type: script
@@ -58,6 +56,4 @@ modules:
         commands:
           - exec java -Xmx256m -Xms128m -jar /app/share/es.estoes.wallpaperDownloader/wallpaperdownloader.jar
             $@
-      - type: file
-        path: es.estoes.wallpaperDownloader.metainfo.xml
       - maven-dependencies.yaml
