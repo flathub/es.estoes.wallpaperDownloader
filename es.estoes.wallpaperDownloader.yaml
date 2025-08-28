@@ -57,8 +57,8 @@ modules:
     sources:
       - type: archive
         dest-filename: wallpaperdownloader.tar.gz
-        url: https://bitbucket.org/eloy_garcia_pca/wallpaperdownloader/get/v4.4.3.tar.gz
-        sha256: 674c37822d91bb00c268c322c4902685540561f0f2117a867b2320590de390ac
+        url: https://bitbucket.org/eloy_garcia_pca/wallpaperdownloader/get/v4.5.0.tar.gz
+        sha256: deff1fb2adcd31a68acb9bd1e76ee8d5fde8a4af387f35e91fc92028fc4b77e7
         x-checker-data:
           type: json
           url: https://api.bitbucket.org/2.0/repositories/eloy_garcia_pca/wallpaperdownloader/refs/tags?sort=-name
