@@ -65,6 +65,8 @@ modules:
           tag-query: .values | .[0].name
           version-query: $tag | sub("^v"; "")
           url-query: '"https://bitbucket.org/eloy_garcia_pca/wallpaperdownloader/get/\($tag).tar.gz"'
+      - type: patch
+        path: patches/0001-Update-OARS-rating.patch
       - type: script
         dest-filename: wallpaperdownloader
         commands:

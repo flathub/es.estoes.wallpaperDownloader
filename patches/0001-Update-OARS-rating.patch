@@ -1,0 +1,57 @@
+From 5a6a3e0889284b4dbdbd71537e6146fa40b0a8b3 Mon Sep 17 00:00:00 2001
+From: guihkx <626206+guihkx@users.noreply.github.com>
+Date: Wed, 22 Apr 2026 16:27:49 -0300
+Subject: [PATCH] Update OARS rating
+
+OARS (Open Age Ratings Service) is a standardized, open system used by
+applications to declare their age-appropriate content. It defines a set
+of content descriptors (such as violence, language, or sexual content),
+each with graded levels, allowing software centers to present consistent
+and machine-readable age ratings without relying on region-specific
+rating boards.
+
+Since most wallpaper providers we have are based on user-generated
+content, it's pretty much impossible to know what kind of wallpaper you
+might get (specifying tags help, but it's not a bulletproof either).
+
+For that reason, it's best and easier to crank up the rating on
+such sensitive topics.
+
+See also: https://github.com/flathub/es.estoes.wallpaperDownloader/issues/23
+---
+ es.estoes.wallpaperDownloader.metainfo.xml | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
+
+diff --git a/es.estoes.wallpaperDownloader.metainfo.xml b/es.estoes.wallpaperDownloader.metainfo.xml
+index d1037f4..0697f0c 100644
+--- a/es.estoes.wallpaperDownloader.metainfo.xml
++++ b/es.estoes.wallpaperDownloader.metainfo.xml
+@@ -37,7 +37,24 @@
+   <url type="homepage">https://bitbucket.org/eloy_garcia_pca/wallpaperdownloader</url>
+   <url type="help">https://bitbucket.org/eloy_garcia_pca/wallpaperdownloader/wiki/Home</url>
+   <url type="bugtracker">https://bitbucket.org/eloy_garcia_pca/wallpaperdownloader/issues?status=new&amp;status=open</url>
+-  <content_rating type="oars-1.1"/>
++  <content_rating type="oars-1.1">
++    <content_attribute id="violence-cartoon">intense</content_attribute>
++    <content_attribute id="violence-fantasy">intense</content_attribute>
++    <content_attribute id="violence-realistic">intense</content_attribute>
++    <content_attribute id="violence-bloodshed">intense</content_attribute>
++    <content_attribute id="violence-sexual">intense</content_attribute>
++    <content_attribute id="violence-desecration">intense</content_attribute>
++    <content_attribute id="violence-slavery">intense</content_attribute>
++    <content_attribute id="drugs-alcohol">moderate</content_attribute>
++    <content_attribute id="drugs-narcotics">moderate</content_attribute>
++    <content_attribute id="drugs-tobacco">moderate</content_attribute>
++    <content_attribute id="sex-nudity">intense</content_attribute>
++    <content_attribute id="sex-themes">intense</content_attribute>
++    <content_attribute id="language-profanity">intense</content_attribute>
++    <content_attribute id="language-humor">intense</content_attribute>
++    <content_attribute id="language-discrimination">intense</content_attribute>
++    <content_attribute id="money-advertising">intense</content_attribute>
++  </content_rating>
+   <releases>
+     <release version="4.5.0" date="2025-08-28">
+       <url>https://bitbucket.org/eloy_garcia_pca/wallpaperdownloader/wiki/Features#markdown-header-version-450</url>
+-- 
+2.54.0
+
